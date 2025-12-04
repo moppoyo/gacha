@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クリスマスマーケット ガチャ</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8; /* 背景色：動画の水玉に合わせて薄い色 */
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 480px; /* スマホで見やすい幅 */
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+        }
+        h1 {
+            font-size: 1.2rem;
+            color: #1a3c6e; /* チラシっぽい濃い青 */
+            margin-bottom: 20px;
+        }
+        /* 動画エリア */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+        
+        /* スタートボタン */
+        #startBtn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffcc00; /* 目立つ黄色 */
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+            z-index: 10;
+        }
+        #startBtn:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        /* 結果エリア（最初は隠す） */
+        #resultArea {
+            display: none; /* ここが重要 */
+            animation: fadeIn 1s ease;
+            border: 2px dashed #1a3c6e;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fffaf0;
+        }
+        
+        .ticket-info {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d32f2f;
+            margin: 10px 0;
+        }
+        .note {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="https://i.imgur.com/your-header-image.png" alt="" style="width:100px; margin-bottom:10px;"> <!-- ロゴなどあれば -->
+    <h1>Special Gacha Challenge</h1>
+
+    <div class="video-wrapper">
+        <!-- 動画ファイル -->
+        <!-- playsinlineはiPhoneで全画面にならずに再生するために必須 -->
+        <video id="gachaVideo" playsinline>
+            <source src="gacha.mp4" type="video/mp4">
+            お使いのブラウザは動画に対応していません。
+        </video>
+        
+        <!-- 再生ボタン -->
+        <button id="startBtn">ガチャを回す！</button>
+    </div>
+
+    <!-- 動画が終わったら表示されるエリア -->
+    <div id="resultArea">
+        <p>おめでとうございます！</p>
+        <div class="ticket-info">
+            ¥1,000 OFF<br>スペシャルチケット
+        </div>
+        <p>スタッフにこの画面をご提示ください</p>
+        
+        <div class="note">
+            <ul>
+                <li>有効期限：2025年12月25日まで</li>
+                <li>お一人様1回限り有効です</li>
+                <li>会計前にご提示ください</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const video = document.getElementById('gachaVideo');
+    const btn = document.getElementById('startBtn');
+    const result = document.getElementById('resultArea');
+
+    // ボタンを押した時の処理
+    btn.addEventListener('click', function() {
+        btn.style.display = 'none'; // ボタンを消す
+        video.muted = false; // 音声をオンにする
+        video.play(); // 再生開始
+    });
+
+    // 動画が終わった時の処理
+    video.addEventListener('ended', function() {
+        result.style.display = 'block'; // 結果エリアを表示
+    });
+</script>
+
+</body>
+</html>
